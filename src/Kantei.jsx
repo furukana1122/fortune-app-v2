@@ -858,7 +858,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
         {/* ===== 大運ライフサイクル ===== */}
         <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-[#e8e4de] print:rounded-xl print:shadow-none break-inside-avoid ">
           {/* ヘッダー */}
-          <div className="daiun-header px-8 pt-8 pb-6 print:px-5 print:pt-5 print:pb-4">
+          <div className="daiun-header px-8 pt-8 pb-2 print:px-5 print:pt-5 print:pb-4">
             <h2 className="text-base font-bold flex items-center gap-2.5 mb-1 text-[#2d2a26]">
               <Calendar className="w-4 h-4 text-[#8a967d]" /> 大運ライフサイクル
             </h2>
