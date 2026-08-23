@@ -21,3 +21,9 @@ body {
     grid-template-columns: repeat(6, 1fr) !important;
   }
 }
+
+@media print {
+  .month-unki-grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+}

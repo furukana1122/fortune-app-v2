@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/fortune-app-v2/',
+  base: '/',
   plugins: [
     react(),
     tailwindcss(),

@@ -428,7 +428,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
   };
     
 
-  const getDaysInMonth = (y, m) => new Date(y, m, 0).getDate();
+  const getDaysInMonth = (y, m) => new Date(y || new Date().getFullYear(), m, 0).getDate();
   const handlePrint = () => {
     const orig = document.title;
     document.title = `鑑定資料_${userName || "無名"} 様`;
@@ -480,17 +480,17 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
             </div>
             <div className="flex flex-wrap items-center gap-3 font-sans">
               <div className="bg-[#f5f2ee] px-3 py-2 rounded-xl border border-[#e8e4de]">
-                <input type="text" value={userName} onChange={e => setUserName(e.target.value)} placeholder="お名前" className="bg-transparent border-none text-sm font-bold focus:ring-0 w-28 placeholder:text-[#b0a89e]" />
+                <input type="text" value={userName} onChange={e => setUserName(e.target.value)} placeholder="お名前" className="bg-transparent border-none text-base font-bold focus:ring-0 w-28 placeholder:text-[#b0a89e]" />
               </div>
               <div className="flex bg-[#f5f2ee] p-1 rounded-xl border border-[#e8e4de]">
                 <button onClick={() => setGender("male")} className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${gender === "male" ? "bg-white text-[#7d8a70] shadow-sm" : "text-[#9a9288]"}`}>男性</button>
                 <button onClick={() => setGender("female")} className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${gender === "female" ? "bg-white text-[#b08c8c] shadow-sm" : "text-[#9a9288]"}`}>女性</button>
               </div>
               <div className="flex flex-wrap gap-1 bg-[#f5f2ee] px-3 py-2 rounded-2xl border border-[#e8e4de]">
-                {[{label:"年",node:<input type="number" value={year} onChange={e=>setYear(parseInt(e.target.value)||0)} className="w-16 bg-transparent border-none text-center font-bold text-sm p-0 focus:ring-0" />},
-                  {label:"月",node:<select value={month} onChange={e=>setMonth(parseInt(e.target.value))} className="bg-transparent border-none font-bold text-sm p-0 focus:ring-0 cursor-pointer appearance-none pr-3" style={{backgroundImage:"url(\"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a7469' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",backgroundRepeat:'no-repeat',backgroundPosition:'right 0 center'}}>{Array.from({length:12},(_,i)=>i+1).map(v=><option key={v} value={v}>{v}</option>)}</select>},
-                  {label:"日",node:<select value={day} onChange={e=>setDay(parseInt(e.target.value))} className="bg-transparent border-none font-bold text-sm p-0 focus:ring-0 cursor-pointer appearance-none pr-3" style={{backgroundImage:"url(\"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a7469' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",backgroundRepeat:'no-repeat',backgroundPosition:'right 0 center'}}>{Array.from({length:getDaysInMonth(year,month)},(_,i)=>i+1).map(v=><option key={v} value={v}>{v}</option>)}</select>},
-                  {label:"時",node:<select value={hour} onChange={e=>setHour(parseInt(e.target.value))} className="bg-transparent border-none font-bold text-sm p-0 focus:ring-0 cursor-pointer appearance-none pr-3" style={{backgroundImage:"url(\"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a7469' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",backgroundRepeat:'no-repeat',backgroundPosition:'right 0 center'}}>{Array.from({length:24},(_,i)=>i).map(v=><option key={v} value={v}>{v}</option>)}</select>},
+                {[{label:"年",node:<input type="number" value={year} onChange={e=>{const val=e.target.value;setYear(val===""?"":parseInt(val,10));}} className="w-16 bg-transparent border-none text-center font-bold text-base p-0 focus:ring-0" />},
+                  {label:"月",node:<select value={month} onChange={e=>setMonth(parseInt(e.target.value))} className="bg-transparent border-none font-bold text-base p-0 focus:ring-0 cursor-pointer appearance-none pr-3" style={{backgroundImage:"url(\"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a7469' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",backgroundRepeat:'no-repeat',backgroundPosition:'right 0 center'}}>{Array.from({length:12},(_,i)=>i+1).map(v=><option key={v} value={v}>{v}</option>)}</select>},
+                  {label:"日",node:<select value={day} onChange={e=>setDay(parseInt(e.target.value))} className="bg-transparent border-none font-bold text-base p-0 focus:ring-0 cursor-pointer appearance-none pr-3" style={{backgroundImage:"url(\"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a7469' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",backgroundRepeat:'no-repeat',backgroundPosition:'right 0 center'}}>{Array.from({length:getDaysInMonth(year,month)},(_,i)=>i+1).map(v=><option key={v} value={v}>{v}</option>)}</select>},
+                  {label:"時",node:<select value={hour} onChange={e=>setHour(parseInt(e.target.value))} className="bg-transparent border-none font-bold text- p-0 focus:ring-0 cursor-pointer appearance-none pr-3" style={{backgroundImage:"url(\"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a7469' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",backgroundRepeat:'no-repeat',backgroundPosition:'right 0 center'}}>{Array.from({length:24},(_,i)=>i).map(v=><option key={v} value={v}>{v}</option>)}</select>},
                   {label:"分",node:<input type="text" inputMode="numeric" value={minute===0?"00":minute.toString().padStart(2,'0')} onFocus={e=>e.target.select()} onChange={e=>{const v=e.target.value.replace(/\D/g,'');if(v===''){setMinute(0);return;}const n=parseInt(v.slice(-2));setMinute(n>59?59:n);}} className="bg-transparent border-none font-bold text-sm p-0 focus:ring-0 w-6 text-center outline-none" />}
                 ].map(({label,node})=>(
                   <div key={label} className="text-center px-1">
@@ -837,7 +837,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
     ✦ あなたの月運気
   </div>
 
-<div className="month-unki-grid" style={{ display:'grid', gridTemplateColumns:'repeat(2, 1fr)', gap:'8px', fontSize:13, color:'#3d3933', fontFamily:'sans-serif' }}>
+<div className="month-unki-grid" style={{ display:'grid', gridTemplateColumns:'repeat(2, 1fr)', gap:'8px', fontSize:13, color:'#3d3933', fontFamily:'sans-serif' }} ref={el => { if (el) el.style.setProperty('grid-template-columns', window.matchMedia('print').matches ? 'repeat(6, 1fr)' : 'repeat(2, 1fr)'); }}>
   {(result.monthUnkiList || []).map((m, i) => {
     const isTen = ['忍耐','陰徳','修行'].includes(m.name);
     return (

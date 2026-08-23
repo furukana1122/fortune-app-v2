@@ -1,58 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
-  Compass, 
   Sparkles, 
-  Moon, 
   Star, 
   ChevronRight,
   Lock
 } from 'lucide-react';
-
 
 import Kantei from './Kantei'
 // import Calendar from './Calendar'
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState('/');
-  const [authed, setAuthed] = useState(false);
-  const [pw, setPw] = useState('');
-  const [pwError, setPwError] = useState(false);
-
-  const PASS = '12345';
-
-  const handleLogin = () => {
-    if (pw === PASS) {
-      setAuthed(true);
-      setPwError(false);
-    } else {
-      setPwError(true);
-    }
-  };
-
-  if (!authed) return (
-    <div className="min-h-screen bg-[#F7F5F2] flex items-center justify-center">
-      <div className="bg-white rounded-3xl p-12 shadow-sm border border-slate-200 w-full max-w-sm text-center">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-slate-800 mb-2">鑑定システム</h1>
-          <p className="text-sm text-slate-400">パスワードを入力してください</p>
-        </div>
-        <input
-          type="password"
-          value={pw}
-          onChange={e => { setPw(e.target.value); setPwError(false); }}
-          onKeyDown={e => e.key === 'Enter' && handleLogin()}
-          placeholder="Password"
-          className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-slate-400 mb-3 text-center tracking-widest"
-        />
-        {pwError && <p className="text-red-400 text-xs mb-3">パスワードが違います</p>}
-        <button
-          onClick={handleLogin}
-          className="w-full bg-slate-800 text-white rounded-xl py-3 text-sm font-bold hover:bg-slate-700 transition-colors">
-          入る
-        </button>
-      </div>
-    </div>
-  );
 
   const navigateTo = (path) => {
     setCurrentPath(path);
@@ -68,7 +26,7 @@ export default function App() {
             <div className="flex items-center gap-4 mb-8">
               <div className="bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200/60">
                 <img 
-                  src="/fortune-app-v2/cho_icon.png" 
+                  src="/cho_icon.png"
                   alt="アイコン" 
                   className="w-12 h-12 object-contain" 
                  />
