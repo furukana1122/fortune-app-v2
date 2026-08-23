@@ -452,7 +452,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
       {/* 印刷ボタン */}
       <div className="max-w-[1060px] mx-auto pt-6 px-4 flex justify-end print:hidden">
-        <button onClick={handlePrint} className="flex items-center gap-2 bg-[#8a967d] hover:bg-[#7a856d] text-white px-6 py-2.5 rounded-full shadow-md transition-all active:scale-95 text-sm font-bold tracking-wide" style={{ fontFamily: 'sans-serif' }}>
+        <button onClick={handlePrint} className="flex items-center gap-2 bg-[#a8c49a] hover:bg-[#98b48a] text-white px-6 py-2.5 rounded-full shadow-md transition-all active:scale-95 text-sm font-bold tracking-wide" style={{ fontFamily: 'sans-serif' }}>
           <Printer size={16} /> 鑑定書をPDF保存・印刷
         </button>
       </div>
@@ -470,7 +470,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
         <div className="bg-white rounded-3xl px-8 py-6 shadow-sm border border-[#e8e4de] print:hidden">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#a6b09c] to-[#8a967d] rounded-2xl flex items-center justify-center shadow-md">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#c2e0b8] to-[#8abe7a] rounded-2xl flex items-center justify-center shadow-md">
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
               <div>
