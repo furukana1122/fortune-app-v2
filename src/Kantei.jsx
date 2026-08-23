@@ -448,7 +448,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f5f2ee] print:bg-white font-sans text-[#3d3933] leading-relaxed" style={{ fontFamily: "'Hiragino Mincho ProN', 'Yu Mincho', 'Georgia', serif" }}>
+    <div className="min-h-screen bg-[#f0f8f4] print:bg-white font-sans text-[#3d3933] leading-relaxed" style={{ fontFamily: "'Hiragino Mincho ProN', 'Yu Mincho', 'Georgia', serif" }}>
 
       {/* 印刷ボタン */}
       <div className="max-w-[1060px] mx-auto pt-6 px-4 flex justify-end print:hidden">
