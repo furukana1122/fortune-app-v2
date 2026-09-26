@@ -692,9 +692,9 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
     // エリア設定
     const areas = [
-      { label:'大地', en:'Earth', start:1,  end:15, color:'#cafa6a', textColor:'#2d6b58' },
-      { label:'風',   en:'Wind',  start:16, end:30, color:'#57c3ea', textColor:'#1a5a7a' },
-      { label:'太陽', en:'Sun',   start:31, end:45, color:'#ffabab', textColor:'#7a4a10' },
+      { label:'大地', en:'Earth', start:1,  end:15, color:'#c2ef6a', textColor:'#2d6b58' },
+      { label:'風',   en:'Wind',  start:16, end:30, color:'#72cced', textColor:'#1a5a7a' },
+      { label:'太陽', en:'Sun',   start:31, end:45, color:'#f0a4a4', textColor:'#7a4a10' },
       { label:'月',   en:'Moon',  start:46, end:60, color:'#fefc78', textColor:'#6a5a10' },
     ];
 
