@@ -813,7 +813,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
           {[
             { label:'大地', en:'Earth', x:60,  y:340, color:'#2d6b58' },
             { label:'風',   en:'Wind',  x:60,  y:60,  color:'#1a5a7a' },
-            { label:'太陽', en:'Sun',   x:340, y:60,  color:'#7a4a10' },
+            { label:'太陽', en:'Sun',   x:340, y:60,  color:'#721c1c },
             { label:'月',   en:'Moon',  x:340, y:340, color:'#6a5a10' },
           ].map(({ label, en, x, y, color }) => (
             <g key={label}>
