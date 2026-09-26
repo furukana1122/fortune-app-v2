@@ -694,7 +694,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
     const areas = [
       { label:'大地', en:'Earth', start:1,  end:15, color:'#c2ef6a', textColor:'#2d6b58' },
       { label:'風',   en:'Wind',  start:16, end:30, color:'#72cced', textColor:'#1a5a7a' },
-      { label:'太陽', en:'Sun',   start:31, end:45, color:'#f0a4a4', textColor:'#7a4a10' },
+      { label:'太陽', en:'Sun',   start:31, end:45, color:'#ffa9a9', textColor:'#7a4a10' },
       { label:'月',   en:'Moon',  start:46, end:60, color:'#fefc78', textColor:'#6a5a10' },
     ];
 
@@ -786,10 +786,10 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
 {/* 中心四分割（innerRまで拡大・色修正）*/}
 {[
-  { startAngle: Math.PI/2,  endAngle: Math.PI,       color:'rgb(226, 250, 244)' }, // 大地（左下）
-  { startAngle: Math.PI,    endAngle: 3*Math.PI/2,   color:'#e3f6fd' }, // 風（左上）
+  { startAngle: Math.PI/2,  endAngle: Math.PI,       color:'#e9ffbd' }, // 大地（左下）
+  { startAngle: Math.PI,    endAngle: 3*Math.PI/2,   color:'#cbeefa' }, // 風（左上）
   { startAngle: 3*Math.PI/2,endAngle: 2*Math.PI,     color:'#ffe9e9' }, // 太陽（右上）
-  { startAngle: 0,          endAngle: Math.PI/2,     color:'#f7f1d1' }, // 月（右下）
+  { startAngle: 0,          endAngle: Math.PI/2,     color:'#fefdcd' }, // 月（右下）
 ].map(({ startAngle, endAngle, color }, i) => {
   const x1 = cx + innerR * Math.cos(startAngle);
   const y1 = cy + innerR * Math.sin(startAngle);
