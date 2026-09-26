@@ -742,7 +742,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
 
 {/* ===== 推命パラメーター ===== */}
-<div className="bg-white rounded-3xl p-8 shadow-sm border border-[#d0e8f0] break-inside-avoid print:rounded-xl print:p-5 print:shadow-none">
+<div className="bg-white rounded-3xl p-8 shadow-sm border border-[#e8e4de] break-inside-avoid print:rounded-xl print:p-5 print:shadow-none">
   <h2 className="text-base font-bold flex items-center gap-2.5 mb-8 text-[#2d2a26] print:mb-4">
     <PieChart className="w-4 h-4 text-[#8a967d]" /> 推命パラメーター
   </h2>
