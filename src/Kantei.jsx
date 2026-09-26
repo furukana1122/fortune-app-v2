@@ -740,6 +740,255 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
           </div>
         </div>
 
+
+{/* ===== 推命パラメーター ===== */}
+<div className="bg-white rounded-3xl p-8 shadow-sm border border-[#d0e8f0] break-inside-avoid print:rounded-xl print:p-5 print:shadow-none">
+  <h2 className="text-base font-bold flex items-center gap-2.5 mb-8 text-[#2d2a26] print:mb-4">
+    <PieChart className="w-4 h-4 text-[#8a967d]" /> 推命パラメーター
+  </h2>
+  <div className="flex flex-col md:flex-row print:flex-row items-center gap-8 justify-center" style={{ maxWidth:620, margin:'0 auto' }}>
+    <div className="relative flex-shrink-0 print:w-40 print:h-40" style={{ width:320, height:320 }}>
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+        {(() => {
+          let cur = 0;
+          return result.gogyoList.map((item, idx) => {
+            const isOff = disabledGogyo.includes(item.name);
+            const start = (cur / 100) * 2 * Math.PI;
+            const end = ((cur + item.value) / 100) * 2 * Math.PI;
+            cur += item.value;
+            const x1 = 50 + 40 * Math.cos(start), y1 = 50 + 40 * Math.sin(start);
+            const x2 = 50 + 40 * Math.cos(end), y2 = 50 + 40 * Math.sin(end);
+            return <path key={idx} d={`M 50 50 L ${x1} ${y1} A 40 40 0 ${item.value > 50 ? 1 : 0} 1 ${x2} ${y2} Z`} fill={isOff ? '#c8c4bc' : CATEGORIES[item.name].border} stroke="white" strokeWidth="1.5" />;
+          });
+        })()}
+        <circle cx="50" cy="50" r="24" fill="white" />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-[9px] font-bold text-[#a8a196] uppercase tracking-tight font-sans">Balance</span>
+        <span className="text-lg font-bold text-[#3d3933]">
+          {result.gogyoList.filter(item => !disabledGogyo.includes(item.name)).reduce((sum, item) => sum + item.value, 0)}%
+        </span>
+      </div>
+    </div>
+    <div className="flex-1 w-full space-y-3 font-sans">
+      {result.gogyoList.map((item, idx) => {
+        const isOff = disabledGogyo.includes(item.name);
+        return (
+          <div key={idx}
+            onClick={() => {
+              setDisabledGogyo(prev =>
+                isOff ? prev.filter(n => n !== item.name) : [...prev, item.name]
+              );
+            }}
+            style={{ cursor: 'pointer' }}>
+            <div className="flex justify-between items-center mb-1">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: isOff ? '#c8c4bc' : item.border }} />
+                <span className="text-[13px] font-bold" style={{ color: isOff ? '#a8a196' : '#3d3933' }}>{item.name}</span>
+                <span className="text-[10px] text-[#9a9288]">({item.stars.join('/')})</span>
+              </div>
+              <span className="text-[13px] font-bold" style={{ color: isOff ? '#a8a196' : '#3d3933' }}>{item.value}%</span>
+            </div>
+            <div className="h-2.5 w-full bg-[#f5f2ee] rounded-full overflow-hidden border border-[#e8e4de]">
+              <div className="h-full rounded-full" style={{ width:`${item.value}%`, background: isOff ? '#c8c4bc' : item.border, transition:'background 0.3s ease' }} />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
+
+{/* ===== 60干支円盤 ===== */}
+<div className="bg-white rounded-3xl p-8 shadow-sm border border-[#e8e4de] break-inside-avoid print:rounded-xl print:p-5 print:shadow-none">
+  <h2 className="text-base font-bold flex items-center gap-2.5 mb-6 text-[#2d2a26]">
+    <Layers className="w-4 h-4 text-[#8a967d]" /> 60干支マップ
+  </h2>
+  {(() => {
+    const cx = 200, cy = 200, R = 170, innerR = 140, coreR = 70;
+    const total = 60;
+
+    // エリア設定
+    const areas = [
+      { label:'大地', en:'Earth', start:1,  end:15, color:'#b1ddbb', textColor:'#2d6b58' },
+      { label:'風',   en:'Wind',  start:16, end:30, color:'#c2e4f1', textColor:'#1a5a7a' },
+      { label:'太陽', en:'Sun',   start:31, end:45, color:'#facb84', textColor:'#7a4a10' },
+      { label:'月',   en:'Moon',  start:46, end:60, color:'#f5e89c', textColor:'#6a5a10' },
+    ];
+
+    // 番号→角度（1が下から時計回り、画像に合わせて調整）
+    const numToAngle = (n) => ((n - 0.5) / total) * 2 * Math.PI + Math.PI / 2;
+
+    // 各柱の干支番号
+    const nichi = result.pillars.find(p => p.label === '日柱');
+    const tsuki = result.pillars.find(p => p.label === '月柱');
+    const nen   = result.pillars.find(p => p.label === '年柱');
+
+    const nichiBan = nichi ? getKanshiNumber(nichi.kan, nichi.shi) : null;
+    const tsukiBan = tsuki ? getKanshiNumber(tsuki.kan, tsuki.shi) : null;
+    const nenBan   = nen   ? getKanshiNumber(nen.kan,   nen.shi)   : null;
+
+    const ptOnCircle = (n, r) => ({
+      x: cx + r * Math.cos(numToAngle(n)),
+      y: cy + r * Math.sin(numToAngle(n)),
+    });
+
+    // 三角形の頂点
+    const pts = [nichiBan, tsukiBan, nenBan].filter(Boolean).map(n => ptOnCircle(n, innerR * 0.85));
+    const triangle = pts.length === 3
+      ? `M ${pts[0].x},${pts[0].y} L ${pts[1].x},${pts[1].y} L ${pts[2].x},${pts[2].y} Z`
+      : null;
+
+    return (
+     <div className="flex flex-col md:flex-row justify-center items-center gap-8" style={{ margin:'0 auto' }}>
+        <svg viewBox="0 0 400 400" style={{ width:'100%', maxWidth:380 }}>
+
+          {/* エリア扇形 */}
+          {areas.map(({ start, end, color }) => {
+            const startAngle = numToAngle(start) - (1/total) * 2 * Math.PI / 2;
+            const endAngle   = numToAngle(end)   + (1/total) * 2 * Math.PI / 2;
+            const x1 = cx + R * Math.cos(startAngle);
+            const y1 = cy + R * Math.sin(startAngle);
+            const x2 = cx + R * Math.cos(endAngle);
+            const y2 = cy + R * Math.sin(endAngle);
+            const xi1 = cx + innerR * Math.cos(startAngle);
+            const yi1 = cy + innerR * Math.sin(startAngle);
+            const xi2 = cx + innerR * Math.cos(endAngle);
+            const yi2 = cy + innerR * Math.sin(endAngle);
+            return (
+              <path key={start}
+                d={`M ${xi1},${yi1} L ${x1},${y1} A ${R} ${R} 0 0 1 ${x2},${y2} L ${xi2},${yi2} A ${innerR} ${innerR} 0 0 0 ${xi1},${yi1} Z`}
+                fill={color} opacity="0.85" />
+            );
+          })}
+
+          {/* 番号ラベル（放射状） */}
+{Array.from({ length: total }, (_, i) => {
+  const n = i + 1;
+  const angle = numToAngle(n);
+  const labelR = (R + innerR) / 2;
+  const x = cx + labelR * Math.cos(angle);
+  const y = cy + labelR * Math.sin(angle);
+  const isMarked = [nichiBan, tsukiBan, nenBan].includes(n);
+  const rotateDeg = (angle * 180 / Math.PI) + 90;
+  return (
+    <text key={n} x={x} y={y}
+      textAnchor="middle" dominantBaseline="middle"
+      transform={`rotate(${rotateDeg}, ${x}, ${y})`}
+      style={{
+        fontSize: isMarked ? '11px' : '8px',
+        fontWeight: isMarked ? 700 : 400,
+        fill: isMarked ? '#1a1a1a' : '#5a5050',
+        fontFamily: 'sans-serif'
+      }}>
+      {n}
+    </text>
+  );
+})}
+
+          {/* 仕切り線 */}
+          {Array.from({ length: total }, (_, i) => {
+            const angle = numToAngle(i + 1) - (0.5 / total) * 2 * Math.PI;
+            return (
+              <line key={i}
+                x1={cx + innerR * Math.cos(angle)} y1={cy + innerR * Math.sin(angle)}
+                x2={cx + R * Math.cos(angle)}       y2={cy + R * Math.sin(angle)}
+                stroke="white" strokeWidth="0.8" opacity="0.6" />
+            );
+          })}
+
+          {/* 外枠・内枠 */}
+          <circle cx={cx} cy={cy} r={R}      fill="none" stroke="#c8c0b4" strokeWidth="1.5" />
+          <circle cx={cx} cy={cy} r={innerR} fill="none" stroke="#c8c0b4" strokeWidth="1.5" />
+
+
+{/* 中心四分割（innerRまで拡大・色修正）*/}
+{[
+  { startAngle: Math.PI/2,  endAngle: Math.PI,       color:'rgb(226, 250, 244)' }, // 大地（左下）
+  { startAngle: Math.PI,    endAngle: 3*Math.PI/2,   color:'#e3f6fd' }, // 風（左上）
+  { startAngle: 3*Math.PI/2,endAngle: 2*Math.PI,     color:'rgb(246, 233, 206)' }, // 太陽（右上）
+  { startAngle: 0,          endAngle: Math.PI/2,     color:'#f7f1d1' }, // 月（右下）
+].map(({ startAngle, endAngle, color }, i) => {
+  const x1 = cx + innerR * Math.cos(startAngle);
+  const y1 = cy + innerR * Math.sin(startAngle);
+  const x2 = cx + innerR * Math.cos(endAngle);
+  const y2 = cy + innerR * Math.sin(endAngle);
+  return (
+    <path key={i}
+      d={`M ${cx},${cy} L ${x1},${y1} A ${innerR} ${innerR} 0 0 1 ${x2},${y2} Z`}
+      fill={color} />
+  );
+})}
+<circle cx={cx} cy={cy} r={innerR} fill="none" stroke="#c8c0b4" strokeWidth="1" />
+
+          {/* 三角形 */}
+          {triangle && (
+            <path d={triangle} fill="rgba(90,90,90,0.12)" stroke="#3a3a3a" strokeWidth="1.5" strokeLinejoin="round" />
+          )}
+
+
+          {/* エリアラベル（4隅） */}
+          {[
+            { label:'大地', en:'Earth', x:60,  y:340, color:'#2d6b58' },
+            { label:'風',   en:'Wind',  x:60,  y:60,  color:'#1a5a7a' },
+            { label:'太陽', en:'Sun',   x:340, y:60,  color:'#7a4a10' },
+            { label:'月',   en:'Moon',  x:340, y:340, color:'#6a5a10' },
+          ].map(({ label, en, x, y, color }) => (
+            <g key={label}>
+              <text x={x} y={y-8} textAnchor="middle" style={{ fontSize:'14px', fontWeight:700, fill:color }}>{label}</text>
+              <text x={x} y={y+8} textAnchor="middle" style={{ fontSize:'9px', fill:color, fontFamily:'sans-serif', letterSpacing:'0.1em' }}>{en}</text>
+            </g>
+          ))}
+
+
+
+        </svg>
+
+{/* エリア別バーグラフ */}
+<div className="mt-0 space-y-3 font-sans w-full md:w-48">
+  {(() => {
+    const areaData = [
+      { label:'大地', color:'#7dbfaa', border:'#5a9a88' },
+      { label:'風',   color:'#7bbdd4', border:'#4a8aaa' },
+      { label:'太陽', color:'#e8a94a', border:'#c07820' },
+      { label:'月',   color:'#d4c46a', border:'#a89a30' },
+    ];
+    const counts = { '大地':0, '風':0, '太陽':0, '月':0 };
+    [nichiBan, tsukiBan, nenBan].filter(Boolean).forEach(n => {
+      if (n >= 1  && n <= 15) counts['大地']++;
+      if (n >= 16 && n <= 30) counts['風']++;
+      if (n >= 31 && n <= 45) counts['太陽']++;
+      if (n >= 46 && n <= 60) counts['月']++;
+    });
+    const total = Object.values(counts).reduce((s,v) => s+v, 0) || 1;
+    return areaData.map(({ label, color, border }) => {
+      const pct = Math.round((counts[label] / total) * 100);
+      return (
+        <div key={label}>
+          <div className="flex justify-between items-center mb-1">
+            <div className="flex items-center gap-2">
+              <div className="w-2.5 h-2.5 rounded-full" style={{ background: border }} />
+              <span className="text-[13px] font-bold text-[#3d3933]">{label}</span>
+            </div>
+            <span className="text-[13px] font-bold text-[#3d3933]">{pct}%</span>
+          </div>
+          <div className="h-2.5 w-full bg-[#f5f2ee] rounded-full overflow-hidden border border-[#e8e4de]">
+            <div className="h-full rounded-full" style={{ width:`${pct}%`, background: border }} />
+          </div>
+        </div>
+      );
+    });
+  })()}
+</div>
+
+
+      </div>
+    );
+  })()}
+</div>
+
+
+
         {/* ===== バイオリズム＋大運 ページまとめラッパー ===== */}
         <div className="space-y-6 print:space-y-3" style={{ breakBefore: 'page', breakInside: 'avoid' }}>
 
