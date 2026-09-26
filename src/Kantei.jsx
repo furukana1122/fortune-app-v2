@@ -786,8 +786,8 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 
 {/* 中心四分割（innerRまで拡大・色修正）*/}
 {[
-  { startAngle: Math.PI/2,  endAngle: Math.PI,       color:'#e9ffbd' }, // 大地（左下）
-  { startAngle: Math.PI,    endAngle: 3*Math.PI/2,   color:'#cbeefa' }, // 風（左上）
+  { startAngle: Math.PI/2,  endAngle: Math.PI,       color:'#f5ffe0' }, // 大地（左下）
+  { startAngle: Math.PI,    endAngle: 3*Math.PI/2,   color:'#e0f7ff' }, // 風（左上）
   { startAngle: 3*Math.PI/2,endAngle: 2*Math.PI,     color:'#ffe9e9' }, // 太陽（右上）
   { startAngle: 0,          endAngle: Math.PI/2,     color:'#fefdcd' }, // 月（右下）
 ].map(({ startAngle, endAngle, color }, i) => {
@@ -830,10 +830,10 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
 <div className="mt-0 space-y-3 font-sans w-full md:w-48">
   {(() => {
     const areaData = [
-      { label:'大地', color:'#7dbfaa', border:'#5a9a88' },
-      { label:'風',   color:'#7bbdd4', border:'#4a8aaa' },
-      { label:'太陽', color:'#e8a94a', border:'#c07820' },
-      { label:'月',   color:'#d4c46a', border:'#a89a30' },
+      { label:'大地', color:'#7dbfaa', border:'#c2ef6a' },
+      { label:'風',   color:'#7bbdd4', border:'#72cced' },
+      { label:'太陽', color:'#e8a94a', border:'#ffa9a9' },
+      { label:'月',   color:'#d4c46a', border:'#fefc78' },
     ];
     const counts = { '大地':0, '風':0, '太陽':0, '月':0 };
     [nichiBan, tsukiBan, nenBan].filter(Boolean).forEach(n => {
