@@ -840,7 +840,7 @@ const monthUnkiList = Array.from({ length: 12 }, (_, i) => {
       : null;
 
     return (
-     <div className="flex flex-col md:flex-row justify-center items-center gap-8" style={{ margin:'0 auto' }}>
+     <div className="flex flex-col md:flex-row print:flex-row justify-center items-center gap-8" style={{ margin:'0 auto' }}>
         <svg viewBox="0 0 400 400" style={{ width:'100%', maxWidth:380 }}>
 
           {/* エリア扇形 */}
