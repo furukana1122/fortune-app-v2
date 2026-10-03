@@ -55,8 +55,9 @@ export default function App() {
               {/* 2. メニュー2 (準備中) */}
               <MenuButton 
                 icon={<Sparkles style={{ color: '#a6b09c' }} />}
-                title="メニュー検討中"
-                onClick={() => navigateTo('/Calendar')}
+                title="Group Engine"
+                description="複数名の鑑定情報を出力します"
+                onClick={() => navigateTo('/Group')}
                 isActive={true}
               />
 
